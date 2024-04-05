@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link,useParams } from 'react-router-dom'
-function PostPage({posts,handleDelete}) {
-
+import { Link,useNavigate,useParams } from 'react-router-dom'
+function PostPage({posts,handleDelete,handleEdit}) {
+  let navigate = useNavigate()
   let {id} = useParams();
   // params will return object  return string by the way
   const post = posts.find(post => post.id == id);
@@ -22,6 +22,9 @@ function PostPage({posts,handleDelete}) {
 
             Delete
           </button>
+
+
+          <button onClick={()=>navigate(`/edit/${id}`)}>Edit </button>
           </>
         }
       </article>
