@@ -17,36 +17,15 @@ import Footer from "../Components/Footer";
 
 import api from "../api/posts"; //! here we import the API so we can use it in our application
 
+
+// - Hooks 
+import useAxiosFetch from "../Hooks/useAxiosFetch";
 function Views() {
   const [posts, setPosts] = useState([]);
   let navigate = useNavigate();
-  console.log(posts);
-  useEffect(() => {
-    async function getData() {
-      try {
-        let response = await api.get("/posts");
-        console.log(response);
-        setPosts(response.data);
-      } catch (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-      }
-    }
-    getData();
-  }, []);
+  const {data,fetchError,isLoading} = useAxiosFetch("http://localhost:3000/posts")
+  useEffect(()=>{setPosts(data)},[data])
+
   const [editBody, setEditBody] = useState("");
   const [editTitle, setEditTitle] = useState("");
 
@@ -157,7 +136,7 @@ function Views() {
       <Nav search={search} setSearch={setSearch} />
       <Routes>
         <Route path="/">
-          <Route index element={<Home posts={searchResults} />} />
+          <Route index element={<Home posts={searchResults} isLoading={isLoading} error={fetchError} />} />
           <Route
             path="post"
             element={
