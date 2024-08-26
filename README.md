@@ -7,3 +7,4 @@ Notes
 
 
 
+- when Create context provider write `children` with lower case :)

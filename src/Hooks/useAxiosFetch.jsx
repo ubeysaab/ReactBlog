@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState,useEffect } from "react";
 
 
-import React from 'react'
+
 
 function useAxiosFetch(baseUrl) {
   
@@ -12,23 +12,34 @@ function useAxiosFetch(baseUrl) {
 
   useEffect(()=>{
     // * in the definition we used URL but when we call it is actually receive baseUrl
-    async function get(url){
+    let isMounted = true;
+    const source = axios.CancelToken.source();
+    async function getDataFun(url){
       try {
-        let response =  await axios.get(url)
-        setData(response.data)
-        setIsLoading(true)
-
-        
+        let response =  await axios.get(url,{cancelToken:source.token});
+        if(isMounted){
+          setData(response.data)
+          setIsLoading(true)
+        }
       } catch (error) {
-        setFetchError(error.message)
+        if(isMounted){
+          setFetchError(error.message)
+        }
       }finally {
-        setTimeout(() => {
+        isMounted && setTimeout(() => {
           setIsLoading(false)
         }, 2000);
       }
     }
 
-    get(baseUrl)
+    getDataFun(baseUrl)
+// cleanUp will run when ever a dependency changes for the use effect
+    return ()=>{
+      console.log("clean up function ");
+      isMounted= false;
+      // cancel the request this 
+      source.cancel();
+    }
   },[baseUrl])
 
 

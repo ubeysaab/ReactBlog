@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Feed from "../Components/Feed"
-function Home({posts,isLoading,error}) {
-  return (
+import DataContext from '../context/DataContext'
+function Home() {
+  const {searchResults ,isLoading,fetchError} = useContext(DataContext)
 
+
+  return (
 
 <>
 
@@ -10,11 +13,11 @@ function Home({posts,isLoading,error}) {
       {isLoading ? <p>
         all posts are loading  now please wait a minute
       </p> :
-        !isLoading&& posts.length ? (
-          <Feed posts={posts}/>
+        !isLoading&& searchResults.length ? (
+          <Feed posts={searchResults}/>
         ):(
             <p>
-              {error}
+              {fetchError}
             </p>
         )
       }
