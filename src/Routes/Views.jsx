@@ -136,7 +136,7 @@ function Views() {
   // console.log(window)
   return (
     <>
-      <Header title={"ubey blog"}  width={width}/>
+      <Header title={"React blog"}  width={width}/>
       <Nav />
       <Routes>
         <Route path="/">
