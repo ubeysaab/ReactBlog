@@ -1,16 +1,22 @@
 {
   "posts": [
     {
-      "id": "3",
-      "title": "hello world",
-      "datetime": "August 23 2024  1:22:10 PM",
-      "body": "now "
+      "id": "75614d93-1d69-45ad-bade-47727bcecbdf",
+      "title": "first post after easypeasy",
+      "datetime": "August  28, 2024 9:52:58 AM",
+      "body": "hello"
     },
     {
-      "id": 2,
-      "title": "First Day",
-      "datetime": "August 26 2024  3:55:01 PM",
-      "body": "Hello every body "
+      "id": "4fa6ab89-018f-425e-bf52-ec4d6763e21b",
+      "title": "2nd after easy peasy ee",
+      "datetime": "August 28, 24 10:07:05 AM",
+      "body": "hello Edited4"
+    },
+    {
+      "id": "ff4e3032-730f-4a5a-bf0d-cfd30a4443b2",
+      "title": "asfsda",
+      "datetime": "August  28, 2024 1:11:45 PM",
+      "body": "affads"
     }
   ]
 }

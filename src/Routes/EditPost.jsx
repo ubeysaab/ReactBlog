@@ -1,26 +1,49 @@
 import { useContext, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import DataContext from "../context/DataContext";
+import { useParams, Link,useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { useStoreState,useStoreActions } from "easy-peasy";
 
 function EditPost() {
-  const {
-    posts,
-    handleEdit,
-    editBody,
-    setEditBody,
-    editTitle,
-    setEditTitle,
-  } = useContext(DataContext)
+
+
+  // const posts = useStoreState(state => state.posts);
+  const editBody = useStoreState(state => state.editBody);
+  const editTitle = useStoreState(state => state.editTitle);
+  const getPostById = useStoreState(state => state.getPostById)
+
+  const setEditBody = useStoreActions(actions => actions.setEditBody);
+  const setEditTitle = useStoreActions(actions => actions.setEditTitle);
+  const editPost = useStoreActions(actions => actions.editPost);
   // * The Id comes out of the params is string
   const { id } = useParams();
+  const navigate = useNavigate()
 
-  const post = posts.find((post) => post.id == id);
+
+  const post = getPostById(id)
+
+
+async function handleEdit(id){
+  console.log(id)
+  const datetime = format(new Date(), "MMMM dd, yy pp");
+
+  const updatedPost = { id, title: editTitle, datetime, body: editBody };
+
+  editPost(updatedPost);
+navigate('/')  
+}
+
+
+
+
+
+
+
+
   useEffect(() => {
     if (post) {
       setEditBody(post.body);
       setEditTitle(post.title);
     }
-    // todo : adding post  and setEdits
   }, []);
   console.log(post);
   return (

@@ -1,12 +1,25 @@
  import React, { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import DataContext from "../context/DataContext";
+import { useStoreState,useStoreActions } from "easy-peasy";
 function PostPage() {
-  const { posts, handleDelete } = useContext(DataContext);
   let navigate = useNavigate();
-  let { id } = useParams();
-  // params will return object  return string by the way
-  const post = posts.find((post) => post.id == id);
+  const deletePost = useStoreActions(actions => actions.deletePost);
+  const {id} = useParams()
+  // ! Instead of the line below we defined computed(function) in easypeasy so we'll call it 
+  // //const post = posts.find((post) => post.id == id);
+  const getPostById = useStoreState( state => state.getPostById) // will return a function 
+  const post = getPostById(id)
+
+
+
+  async function handleDelete(id){
+    deletePost(id)
+    navigate("/")
+  }
+
+
+
+
 
   return (
     <main>
